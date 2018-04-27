@@ -44,4 +44,83 @@ describe('Fabricate()', () => {
       `Model "${modelName}" has not been registered`
     )
   })
+
+  describe('Fabricate.times()', () => {
+    it('should create an array based on the model', () => {
+      const modelName = 'user'
+      const model = { id: 1 }
+      Fabricator(modelName, model)
+      const times = 3
+      const objs = Fabricate.times(3, modelName)
+      expect(objs.length).toBe(times)
+      objs.forEach(obj => expect(obj).toEqual({ id: 1 }))
+    })
+
+    it('should create an array based on the model and variations', () => {
+      const modelName = 'user'
+      const model = { id: 1, admin: false }
+      Fabricator(modelName, model)
+      const times = 3
+      const objs = Fabricate.times(3, modelName, { admin: true })
+      expect(objs.length).toBe(times)
+      objs.forEach(obj => expect(obj).toEqual({ id: 1, admin: true }))
+    })
+
+    it('should throw an error if the model is not registered', () => {
+      const modelName = 'user'
+      expect(() => Fabricate('user')).toThrowError(
+        `Model "${modelName}" has not been registered`
+      )
+    })
+  })
+
+  describe('Fabricate.sequence()', () => {
+    it('should return an increasing number every time it gets called', () => {
+      for (let i = 0; i < 20; i++) {
+        expect(Fabricate.sequence()).toBe(i)
+      }
+    })
+
+    it('should increase the sequences separately', () => {
+      const names = ['foo', 'bar', 'baz']
+      for (let i = 0; i < 20; i++) {
+        names.forEach(name => expect(Fabricate.sequence(name)).toBe(i))
+      }
+    })
+  })
+
+  describe('Fabricate.sequence.reset()', () => {
+    beforeEach(() => Fabricate.sequence.reset())
+
+    it('should reset all sequences when called with no arguments', () => {
+      const names = ['foo', 'bar', 'baz']
+      for (let i = 0; i < 20; i++) {
+        names.forEach(name => Fabricate.sequence(name))
+      }
+      Fabricate.sequence.reset()
+      for (let i = 0; i < 20; i++) {
+        names.forEach(name => expect(Fabricate.sequence(name)).toBe(i))
+      }
+    })
+
+    it('should reset the sequence selected by name', () => {
+      const names = ['foo', 'bar', 'baz']
+      for (let i = 0; i < 20; i++) {
+        names.forEach(name => Fabricate.sequence(name))
+        Fabricate.sequence('extra')
+      }
+      Fabricate.sequence.reset('extra')
+      for (let i = 0; i < 20; i++) {
+        names.forEach(name => expect(Fabricate.sequence(name)).toBe(i + 20))
+        expect(Fabricate.sequence('extra')).toBe(i)
+      }
+    })
+
+    it('should throw an error if the sequence does not exist', () => {
+      const name = 'none'
+      expect(() => Fabricate.sequence.reset(name)).toThrowError(
+        `Sequece "${name}" does not exist`
+      )
+    })
+  })
 })

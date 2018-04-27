@@ -35,6 +35,34 @@ function Fabricate(name, defaults = {}) {
   return object
 }
 
+Fabricate.times = (count, name, defaults) =>
+  Array(count)
+    .fill(0)
+    .map(() => Fabricate(name, defaults))
+
+let sequences = {}
+
+Fabricate.sequence = (
+  name = '__VOID_SEQUENCE_NAME_DO_NOT_USE_OR_YOU_WILL_BE_FIRED'
+) => {
+  if (sequences[name] == null) {
+    sequences[name] = -1
+  }
+  return ++sequences[name]
+}
+
+Fabricate.sequence.reset = name => {
+  if (name) {
+    if (sequences[name] != null) {
+      delete sequences[name]
+    } else {
+      throw new Error(`Sequece "${name}" does not exist`)
+    }
+  } else {
+    sequences = {}
+  }
+}
+
 export {
   Fabricator,
   Fabricate,
