@@ -1,10 +1,11 @@
 {
   "name": "@travelperksl/fabricator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fabricate objects for your tests",
-  "main": "src/fabricator.js",
+  "main": "dist/fabricator.js",
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "build": "babel src -d dist"
   },
   "repository": {
     "type": "git",
@@ -15,9 +16,11 @@
   },
   "homepage": "https://github.com/travelperk/fabricator#readme",
   "devDependencies": {
+    "babel-cli": "6.26.0",
     "babel-core": "6.26.2",
     "babel-jest": "22.4.3",
     "babel-preset-env": "1.6.1",
+    "babel-preset-stage-3": "6.24.1",
     "jest": "22.4.3",
     "prettier": "1.12.1",
     "regenerator-runtime": "0.11.1"
