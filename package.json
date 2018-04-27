@@ -1,5 +1,5 @@
 {
-  "name": "fabricator",
+  "name": "@travelperksl/fabricator",
   "version": "1.0.0",
   "description": "Fabricate objects for your tests",
   "main": "src/fabricator.js",
