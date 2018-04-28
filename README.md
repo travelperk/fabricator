@@ -29,7 +29,7 @@ Fabricator('user', {
 })
 ```
 
-You simply pass a name for the model and its definition. The definition is an object in each every key can be a value or a function. If you need dynamic data you can use `Fabricate.sequence()` or use a libraray like [faker](https://www.npmjs.com/package/faker).
+You simply pass a name for the model and its definition. The definition is an object wher each key can be a value or a function. If you need dynamic data you can use `Fabricate.sequence()` or use a libraray like [faker](https://www.npmjs.com/package/faker).
 
 
 
@@ -56,7 +56,7 @@ const admin = Fabricate('admin')
 
 
 
-If can overwrite some values by passing a model defintion as second parameter:
+You can overwrite some values by passing a model defintion as second parameter:
 
 ```js
 const blockedUser = Fabricate('user', { isBlocked: true })
@@ -110,12 +110,16 @@ Fabricate.sequence('user') // => 0
 Fabricate.sequence('company') // => 0
 Fabricate.sequence('user') // => 1
 Fabricate.sequence('company') // => 1
+
 Fabricate.sequence.reset()
+
 Fabricate.sequence('user') // => 0
 Fabricate.sequence('company') // => 0
 Fabricate.sequence('user') // => 1
 Fabricate.sequence('company') // => 1
+
 Fabricate.sequence.reset('company')
+
 Fabricate.sequence('user') // => 2
 Fabricate.sequence('company') // => 0
 Fabricate.sequence('user') // => 3
