@@ -19,20 +19,20 @@ import { Fabricator, Fabricate } from '@travelperksl/fabricator'
 
 Fabricator('user', {
   id: () => Fabricate.sequence('userId'),
-  name: () => faker.name.firstName() + faker.name.lastName()
-  admin: false
+  name: () => faker.name.firstName() + faker.name.lastName(),
+  admin: () => false,
 })
 ```
 
 You simply pass a name for the model and its definition. The definition is an
-object where each key can be a value or a function. If you need dynamic data you
-can use `Fabricate.sequence()` or use a library like
+object where each key is a function. If you need dynamic data you can use
+`Fabricate.sequence()` or use a library like
 [faker](https://www.npmjs.com/package/faker).
 
 You can also extend existing models. For example:
 
 ```js
-Fabricator.extend('user', 'admin', { admin: true })
+Fabricator.extend('user', 'admin', { admin: () => true })
 ```
 
 In this case, `admin` will inherit all the properties from `user` but will
@@ -52,7 +52,7 @@ const admin = Fabricate('admin')
 You can overwrite some values by passing a model definition as second parameter:
 
 ```js
-const blockedUser = Fabricate('user', { isBlocked: true })
+const blockedUser = Fabricate('user', { isBlocked: () => true })
 // => { id: 3, name: 'Donald Brown', admin: false, isBlocked: true }
 ```
 
@@ -65,7 +65,7 @@ If you need to quickly generate more than one object you can use
 const people = Fabricate.times(2, 'user')
 // => [{ id: 3, ... }, { id: 4, ... }]
 
-const colleagues = Fabricate.times(2, 'user', { companyId: 5 })
+const colleagues = Fabricate.times(2, 'user', { companyId: () => 5 })
 // => [{ id: 5, companyId: 5 }, { id: 6, companyId: 6 }]
 ```
 

@@ -18,11 +18,26 @@ describe('Fabricator()', () => {
 
   it('should store a model with a definition', () => {
     const modelName = 'user'
-    const model = { id: 1, firstName: () => 'John', lastName: () => 'Doe' }
+    const model = {
+      id: () => 1,
+      firstName: () => 'John',
+      lastName: () => 'Doe',
+    }
     Fabricator(modelName, model)
     const modelNames = Object.keys(models)
     expect(modelNames).toContain(modelName)
     expect(models[modelName]).toEqual(model)
+  })
+
+  it('should warn when registering a model with a constant', () => {
+    const model = { id: 'constant' }
+    const spy = jest.spyOn(console, 'warn').mockImplementationOnce(() => {})
+    Fabricator('user', model)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(
+      'Defining a fabricator using a constant is going to be deprecated in the next version. Please use a function instead. Check user.id.'
+    )
+    spy.mockRestore()
   })
 
   it('should throw an error when registering an existing model', () => {
@@ -37,7 +52,7 @@ describe('Fabricator()', () => {
     it('should create an alias for a model', () => {
       const baseModelName = 'user'
       const baseModel = {
-        id: 1,
+        id: () => 1,
         firstName: () => 'John',
         lastName: () => 'Doe',
       }
@@ -56,15 +71,15 @@ describe('Fabricator()', () => {
     it('should create a model starting from an existing one', () => {
       const baseModelName = 'user'
       const baseModel = {
-        id: 1,
+        id: () => 1,
         firstName: () => 'John',
         lastName: () => 'Doe',
-        admin: false,
+        admin: () => false,
       }
       Fabricator(baseModelName, baseModel)
 
       const modelName = 'admin'
-      const model = { admin: true }
+      const model = { admin: () => true }
       Fabricator.extend(baseModelName, modelName, model)
 
       const modelNames = Object.keys(models)
