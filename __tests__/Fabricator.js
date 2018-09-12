@@ -29,17 +29,6 @@ describe('Fabricator()', () => {
     expect(models[modelName]).toEqual(model)
   })
 
-  it('should warn when registering a model with a constant', () => {
-    const model = { id: 'constant' }
-    const spy = jest.spyOn(console, 'warn').mockImplementationOnce(() => {})
-    Fabricator('user', model)
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(
-      'Defining a fabricator using a constant is going to be deprecated in the next version. Please use a function instead. Check user.id.'
-    )
-    spy.mockRestore()
-  })
-
   it('should throw an error when registering an existing model', () => {
     const modelName = 'user'
     Fabricator(modelName)
