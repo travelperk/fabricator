@@ -32,7 +32,7 @@ import faker from 'faker'
 Fabricator('user', {
   id: () => Fabricate.sequence('userId'),
   name: () => faker.name.firstName() + faker.name.lastName(),
-  admin: () => false,
+  admin: false,
 })
 ```
 
@@ -44,7 +44,7 @@ object where each key is a function. If you need dynamic data you can use
 You can also extend existing models. For example:
 
 ```js
-Fabricator.extend('user', 'admin', { admin: () => true })
+Fabricator.extend('user', 'admin', { admin: true })
 ```
 
 In this case, `admin` will inherit all the properties from `user` but will
@@ -64,8 +64,24 @@ const admin = Fabricate('admin')
 You can overwrite some values by passing a model definition as second parameter:
 
 ```js
-const blockedUser = Fabricate('user', { isBlocked: () => true })
+const blockedUser = Fabricate('user', { isBlocked: true })
 // => { id: 3, name: 'Donald Brown', admin: false, isBlocked: true }
+```
+
+Note that there's a difference between passing a function and a static value in
+a fabricator definition. A function gets executed when you create a new object,
+a constant value is cached once. Consider the following example:
+
+```js
+Fabricator('withConstant', { foo: Math.random() })
+Fabricate('withConstant') // => { foo: 0.11134742452557367 }
+Fabricate('withConstant') // => { foo: 0.11134742452557367 }
+Fabricate('withConstant') // => { foo: 0.11134742452557367 }
+
+Fabricator('withMethod', { foo: () => Math.random() })
+Fabricate('withMethod') // => { foo: 0.4426388385403983}
+Fabricate('withMethod') // => { foo: 0.572825488636862}
+Fabricate('withMethod') // => { foo: 0.4322506522885017}
 ```
 
 ### Fabricate.times()
@@ -77,7 +93,7 @@ If you need to quickly generate more than one object you can use
 const people = Fabricate.times(2, 'user')
 // => [{ id: 3, ... }, { id: 4, ... }]
 
-const colleagues = Fabricate.times(2, 'user', { companyId: () => 5 })
+const colleagues = Fabricate.times(2, 'user', { companyId: 5 })
 // => [{ id: 5, companyId: 5 }, { id: 6, companyId: 6 }]
 ```
 
