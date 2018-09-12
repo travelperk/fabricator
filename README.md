@@ -69,8 +69,8 @@ const blockedUser = Fabricate('user', { isBlocked: true })
 ```
 
 Note that there's a difference between passing a function and a static value in
-a fabricator definition. A function gets executed when you create a new object,
-a constant value is cached once. Consider the following example:
+a fabricator definition. A function gets executed every time you create a new
+object, a constant value is cached. Consider the following example:
 
 ```js
 Fabricator('withConstant', { foo: Math.random() })
@@ -79,9 +79,9 @@ Fabricate('withConstant') // => { foo: 0.11134742452557367 }
 Fabricate('withConstant') // => { foo: 0.11134742452557367 }
 
 Fabricator('withMethod', { foo: () => Math.random() })
-Fabricate('withMethod') // => { foo: 0.4426388385403983}
-Fabricate('withMethod') // => { foo: 0.572825488636862}
-Fabricate('withMethod') // => { foo: 0.4322506522885017}
+Fabricate('withMethod') // => { foo: 0.4426388385403983 }
+Fabricate('withMethod') // => { foo: 0.572825488636862 }
+Fabricate('withMethod') // => { foo: 0.4322506522885017 }
 ```
 
 ### Fabricate.times()
