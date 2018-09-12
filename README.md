@@ -27,6 +27,7 @@ Models are defined with `Fabricator()` in this way:
 
 ```js
 import { Fabricator, Fabricate } from '@travelperksl/fabricator'
+import faker from 'faker'
 
 Fabricator('user', {
   id: () => Fabricate.sequence('userId'),
