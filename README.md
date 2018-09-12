@@ -1,6 +1,17 @@
-# Fabricator
+<div align="center">
+<h1>Fabricator</h1>
 
-Fabricate objects for your tests
+<a href="https://www.emojione.com/emoji/1f527">
+<img height="80" width="80" alt="wrench" src="https://raw.githubusercontent.com/travelperk/fabricator/master/other/wrench.png" />
+</a>
+
+<p>Fabricate objects for your tests</p>
+</div>
+<hr />
+
+[![Build Status](https://travis-ci.org/travelperk/fabricator.svg?branch=master)](https://travis-ci.org/travelperk/fabricator)
+
+# The Problem
 
 Fabricator is based on the excellent
 [Fabrication](https://www.fabricationgem.org/). Its purpose is to easily
