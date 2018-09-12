@@ -11,7 +11,7 @@
 
 [![Build Status](https://travis-ci.org/travelperk/fabricator.svg?branch=master)](https://travis-ci.org/travelperk/fabricator)
 
-# The Problem
+## The Problem
 
 Fabricator is based on the excellent
 [Fabrication](https://www.fabricationgem.org/). Its purpose is to easily
