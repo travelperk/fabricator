@@ -1,15 +1,18 @@
 {
   "name": "@travelperksl/fabricator",
-  "version": "1.0.1",
+  "version": "0.0.0-development",
   "description": "Fabricate objects for your tests",
   "main": "dist/fabricator.js",
   "scripts": {
-    "test": "jest --watch",
-    "build": "babel src -d dist"
+    "test": "jest --coverage",
+    "build": "babel src -d dist",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release",
+    "cm": "npx git-cz"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/travelperk/fabricator.git"
+    "url": "https://github.com/travelperk/fabricator.git"
   },
   "bugs": {
     "url": "https://github.com/travelperk/fabricator/issues"
@@ -22,7 +25,10 @@
     "babel-preset-env": "1.6.1",
     "babel-preset-stage-3": "6.24.1",
     "jest": "22.4.3",
+    "kcd-scripts": "0.44.0",
     "prettier": "1.12.1",
-    "regenerator-runtime": "0.11.1"
+    "regenerator-runtime": "0.11.1",
+    "travis-deploy-once": "^5.0.7",
+    "semantic-release": "^15.9.15"
   }
 }
