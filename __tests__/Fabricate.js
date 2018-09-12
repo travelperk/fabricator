@@ -14,10 +14,10 @@ describe('Fabricate()', () => {
     expect(Fabricate('empty-object')).toEqual({})
 
     Fabricator('hardcoded-values', {
-      boolean: true,
-      number: 1,
-      string: 'a',
-      array: [0],
+      boolean: () => true,
+      number: () => 1,
+      string: () => 'a',
+      array: () => [0],
     })
     expect(Fabricate('hardcoded-values')).toEqual({
       boolean: true,
@@ -34,7 +34,7 @@ describe('Fabricate()', () => {
   })
 
   it('should return an object based on the model and on the variations', () => {
-    Fabricator('user', { id: 1, admin: false })
+    Fabricator('user', { id: () => 1, admin: () => false })
     expect(Fabricate('user', { admin: true })).toEqual({ id: 1, admin: true })
   })
 
@@ -48,7 +48,7 @@ describe('Fabricate()', () => {
   describe('Fabricate.times()', () => {
     it('should create an array based on the model', () => {
       const modelName = 'user'
-      const model = { id: 1 }
+      const model = { id: () => 1 }
       Fabricator(modelName, model)
       const times = 3
       const objs = Fabricate.times(3, modelName)
@@ -58,10 +58,10 @@ describe('Fabricate()', () => {
 
     it('should create an array based on the model and variations', () => {
       const modelName = 'user'
-      const model = { id: 1, admin: false }
+      const model = { id: () => 1, admin: () => false }
       Fabricator(modelName, model)
       const times = 3
-      const objs = Fabricate.times(3, modelName, { admin: true })
+      const objs = Fabricate.times(3, modelName, { admin: () => true })
       expect(objs.length).toBe(times)
       objs.forEach(obj => expect(obj).toEqual({ id: 1, admin: true }))
     })

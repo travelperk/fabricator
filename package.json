@@ -39,8 +39,12 @@
   },
   "lint-staged": {
     "linters": {
-      "*.{js,json,md}": [
+      "*.{js,json}": [
         "prettier --write",
+        "git add"
+      ],
+      "*.md": [
+        "prettier --write --parser markdown",
         "git add"
       ]
     },

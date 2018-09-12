@@ -4,6 +4,14 @@ function Fabricator(name, model = {}) {
   if (models[name]) {
     throw new Error(`Model "${name}" has already been registered`)
   }
+  Object.keys(model).forEach(key => {
+    if (typeof model[key] !== 'function') {
+      console.warn(
+        `Defining a fabricator using a constant is going to be deprecated in the next version. Please use a function instead. Check ${name}.${key}.`
+      )
+    }
+  })
+
   models[name] = model
 }
 
