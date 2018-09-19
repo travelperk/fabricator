@@ -2,6 +2,12 @@
   "name": "@travelperksl/fabricator",
   "version": "0.0.0-development",
   "description": "Fabricate objects for your tests",
+  "keywords": [
+    "fabricator",
+    "fabrication",
+    "fabricate",
+    "testing"
+  ],
   "main": "dist/fabricator.js",
   "scripts": {
     "test": "jest --coverage",
