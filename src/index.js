@@ -1,2 +1,1 @@
-import { Fabricator, Fabricate } from 'fabricator'
-export { Fabricator, Fabricate }
+export { Fabricator, sequence } from './fabricator'
