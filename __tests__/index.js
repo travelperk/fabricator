@@ -1,4 +1,4 @@
-import { Fabricator, Fabricate, faker } from '../src/fabricator'
+import { Fabricator, sequence } from '../src/'
 
 describe('fabricator', () => {
   it('should export Fabricator()', () => {
@@ -6,8 +6,8 @@ describe('fabricator', () => {
     expect(typeof Fabricator).toBe('function')
   })
 
-  it('should export Fabricate()', () => {
-    expect(Fabricate).toBeDefined()
-    expect(typeof Fabricate).toBe('function')
+  it('should export sequence()', () => {
+    expect(sequence).toBeDefined()
+    expect(typeof sequence).toBe('function')
   })
 })

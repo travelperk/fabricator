@@ -1,97 +1,83 @@
-import {
-  Fabricator,
-  __MODELS_OBJET_DO_NOT_USE_OR_YOU_WILL_BE_FIRED as models,
-} from '../src/fabricator'
+import { Fabricator } from '../src/fabricator'
 
 describe('Fabricator()', () => {
-  beforeEach(() => {
-    Object.keys(models).forEach(key => delete models[key])
+  it('should create an empty model', () => {
+    const user = Fabricator()
+    expect(user()).toEqual({})
   })
 
-  it('should store an empty model', () => {
-    const modelName = 'user'
-    Fabricator(modelName)
-    const modelNames = Object.keys(models)
-    expect(modelNames).toContain(modelName)
-    expect(models[modelName]).toEqual({})
-  })
-
-  it('should store a model with a definition', () => {
-    const modelName = 'user'
-    const model = {
+  it('should create a model based on a definition', () => {
+    const user = Fabricator({
       id: () => 1,
       firstName: () => 'John',
       lastName: () => 'Doe',
-    }
-    Fabricator(modelName, model)
-    const modelNames = Object.keys(models)
-    expect(modelNames).toContain(modelName)
-    expect(models[modelName]).toEqual(model)
+    })
+    expect(user()).toEqual({ id: 1, firstName: 'John', lastName: 'Doe' })
   })
 
-  it('should throw an error when registering an existing model', () => {
-    const modelName = 'user'
-    Fabricator(modelName)
-    expect(() => Fabricator(modelName)).toThrowError(
-      `Model "${modelName}" has already been registered`
-    )
+  it('should return an object based on a function', () => {
+    const functionValue = Fabricator(() => 5 + 3)
+    expect(functionValue()).toEqual(8)
   })
 
-  describe('Fabricator.extend()', () => {
+  it('should return an object based on the model and on the variations', () => {
+    const user = Fabricator({ id: () => 1, admin: () => false })
+    expect(user({ admin: true })).toEqual({ id: 1, admin: true })
+  })
+
+  describe('model.extend()', () => {
     it('should create an alias for a model', () => {
-      const baseModelName = 'user'
-      const baseModel = {
+      const user = Fabricator({
         id: () => 1,
         firstName: () => 'John',
         lastName: () => 'Doe',
-      }
-      Fabricator(baseModelName, baseModel)
+      })
+      const admin = user.extend()
 
-      const modelName = 'admin'
-      Fabricator.extend(baseModelName, modelName)
-
-      const modelNames = Object.keys(models)
-      expect(modelNames).toContain(baseModelName)
-      expect(modelNames).toContain(modelName)
-      expect(models[baseModelName]).toEqual(baseModel)
-      expect(models[modelName]).toEqual(baseModel)
+      expect(user()).toEqual({ id: 1, firstName: 'John', lastName: 'Doe' })
+      expect(admin()).toEqual({ id: 1, firstName: 'John', lastName: 'Doe' })
     })
 
     it('should create a model starting from an existing one', () => {
-      const baseModelName = 'user'
-      const baseModel = {
+      const user = Fabricator({
         id: () => 1,
         firstName: () => 'John',
         lastName: () => 'Doe',
         admin: () => false,
-      }
-      Fabricator(baseModelName, baseModel)
+      })
 
-      const modelName = 'admin'
-      const model = { admin: () => true }
-      Fabricator.extend(baseModelName, modelName, model)
+      const admin = user.extend({ admin: () => true })
 
-      const modelNames = Object.keys(models)
-      expect(modelNames).toContain(baseModelName)
-      expect(modelNames).toContain(modelName)
-      expect(models[baseModelName]).toEqual(baseModel)
-      expect(models[modelName]).toEqual({ ...baseModel, ...model })
+      expect(user()).toEqual({
+        id: 1,
+        firstName: 'John',
+        lastName: 'Doe',
+        admin: false,
+      })
+      expect(admin()).toEqual({
+        id: 1,
+        firstName: 'John',
+        lastName: 'Doe',
+        admin: true,
+      })
+    })
+  })
+
+  describe('model.times()', () => {
+    it('should create an array based on the model', () => {
+      const user = Fabricator({ id: () => 1 })
+      const times = 3
+      const objs = user.times(times)
+      expect(objs.length).toBe(times)
+      objs.forEach(obj => expect(obj).toEqual({ id: 1 }))
     })
 
-    it('should throw an error when registering an existing model', () => {
-      const modelName = 'user'
-      Fabricator(modelName)
-      expect(() => Fabricator.extend(modelName, modelName)).toThrowError(
-        `Model "${modelName}" has already been registered`
-      )
-    })
-
-    it('should throw an error when the base model does not exist', () => {
-      const baseModelName = 'user'
-      const modelName = 'admin'
-      expect(() => Fabricator.extend(baseModelName, modelName)).toThrowError(
-        `Base model "${baseModelName}" has not been registered`
-      )
+    it('should create an array based on the model and variations', () => {
+      const user = Fabricator({ id: () => 1, admin: () => false })
+      const times = 3
+      const objs = user.times(3, { admin: () => true })
+      expect(objs.length).toBe(times)
+      objs.forEach(obj => expect(obj).toEqual({ id: 1, admin: true }))
     })
   })
 })

@@ -1,32 +1,22 @@
-const models = {}
+function Fabricator(model = {}) {
+  const fabricate = opts => Fabricate(model, opts)
 
-function Fabricator(name, model = {}) {
-  if (models[name]) {
-    throw new Error(`Model "${name}" has already been registered`)
-  }
+  fabricate.extend = (opts = {}) => Fabricator({ ...model, ...opts })
 
-  models[name] = model
+  fabricate.times = (count, opts) =>
+    Array(count)
+      .fill(0)
+      .map(() => fabricate(opts))
+
+  return fabricate
 }
 
-Fabricator.extend = (from, name, model = {}) => {
-  if (!models[from]) {
-    throw new Error(`Base model "${from}" has not been registered`)
-  }
-  Fabricator(name, { ...models[from], ...model })
-}
-
-function Fabricate(name, defaults = {}) {
-  const model = models[name]
-
-  if (!model) {
-    throw new Error(`Model "${name}" has not been registered`)
-  }
-
+function Fabricate(model, opts = {}) {
   if (typeof model === 'function') {
     return model.apply()
   }
 
-  const extendedModel = { ...model, ...defaults }
+  const extendedModel = { ...model, ...opts }
   const object = Object.keys(extendedModel).reduce((object, key) => {
     const value = extendedModel[key]
     object[key] = typeof value === 'function' ? value.apply() : value
@@ -36,14 +26,9 @@ function Fabricate(name, defaults = {}) {
   return object
 }
 
-Fabricate.times = (count, name, defaults) =>
-  Array(count)
-    .fill(0)
-    .map(() => Fabricate(name, defaults))
-
 let sequences = {}
 
-Fabricate.sequence = (
+const sequence = (
   name = '__VOID_SEQUENCE_NAME_DO_NOT_USE_OR_YOU_WILL_BE_FIRED'
 ) => {
   if (sequences[name] == null) {
@@ -52,7 +37,7 @@ Fabricate.sequence = (
   return ++sequences[name]
 }
 
-Fabricate.sequence.reset = name => {
+sequence.reset = name => {
   if (name) {
     if (sequences[name] != null) {
       delete sequences[name]
@@ -64,8 +49,4 @@ Fabricate.sequence.reset = name => {
   }
 }
 
-export {
-  Fabricator,
-  Fabricate,
-  models as __MODELS_OBJET_DO_NOT_USE_OR_YOU_WILL_BE_FIRED,
-}
+export { Fabricator, sequence }
