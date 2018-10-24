@@ -11,7 +11,7 @@
 
 [![Build Status](https://travis-ci.org/travelperk/fabricator.svg?branch=master)](https://travis-ci.org/travelperk/fabricator)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3b4b6cb754d1b30ec6e7/maintainability)](https://codeclimate.com/github/travelperk/fabricator/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/3b4b6cb754d1b30ec6e7/test_coverage)](https://codeclimate.com/github/travelperk/fabricator/test_coverage)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/3b4b6cb754d1b30ec6e7/test_coverage)](https://codeclimate.com/github/travelperk/fabricator/test_coverage) [![Greenkeeper badge](https://badges.greenkeeper.io/travelperk/fabricator.svg)](https://greenkeeper.io/)
 
 ## The Problem
 
