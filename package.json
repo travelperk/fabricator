@@ -36,7 +36,7 @@
     "kcd-scripts": "0.46.0",
     "lint-staged": "8.1.5",
     "prettier": "1.16.4",
-    "semantic-release": "15.12.4",
+    "semantic-release": "15.13.3",
     "travis-deploy-once": "5.0.11"
   },
   "husky": {
