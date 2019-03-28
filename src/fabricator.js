@@ -32,7 +32,7 @@ const sequence = (
   name = '__VOID_SEQUENCE_NAME_DO_NOT_USE_OR_YOU_WILL_BE_FIRED'
 ) => {
   if (sequences[name] == null) {
-    sequences[name] = -1
+    sequences[name] = 0
   }
   return ++sequences[name]
 }
