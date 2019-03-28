@@ -11,7 +11,8 @@
 
 [![Build Status](https://travis-ci.org/travelperk/fabricator.svg?branch=master)](https://travis-ci.org/travelperk/fabricator)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3b4b6cb754d1b30ec6e7/maintainability)](https://codeclimate.com/github/travelperk/fabricator/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/3b4b6cb754d1b30ec6e7/test_coverage)](https://codeclimate.com/github/travelperk/fabricator/test_coverage) [![Greenkeeper badge](https://badges.greenkeeper.io/travelperk/fabricator.svg)](https://greenkeeper.io/)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/3b4b6cb754d1b30ec6e7/test_coverage)](https://codeclimate.com/github/travelperk/fabricator/test_coverage)
+[![Greenkeeper badge](https://badges.greenkeeper.io/travelperk/fabricator.svg)](https://greenkeeper.io/)
 
 ## The Problem
 
@@ -104,20 +105,20 @@ Sometimes it can be useful to have an increasing value for a field, for example
 `id`. You can do this with `sequence()`
 
 ```js
-sequence() // => 0
 sequence() // => 1
 sequence() // => 2
+sequence() // => 3
 ```
 
 In some cases you might want to have different sequences, you can simply pass a
 sequence name:
 
 ```js
-sequence('user') // => 0
-sequence('company') // => 0
 sequence('user') // => 1
-sequence('user') // => 2
 sequence('company') // => 1
+sequence('user') // => 2
+sequence('user') // => 3
+sequence('company') // => 2
 ```
 
 ### sequence.reset()
@@ -128,22 +129,22 @@ you want your sequence numbers to be the same every time you execute your test.
 In this case you can simply reset the sequence before running the test:
 
 ```js
-sequence('user') // => 0
-sequence('company') // => 0
 sequence('user') // => 1
 sequence('company') // => 1
+sequence('user') // => 2
+sequence('company') // => 2
 
 sequence.reset()
 
-sequence('user') // => 0
-sequence('company') // => 0
 sequence('user') // => 1
 sequence('company') // => 1
+sequence('user') // => 2
+sequence('company') // => 2
 
 sequence.reset('company')
 
-sequence('user') // => 2
-sequence('company') // => 0
 sequence('user') // => 3
 sequence('company') // => 1
+sequence('user') // => 4
+sequence('company') // => 2
 ```
