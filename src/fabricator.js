@@ -3,10 +3,26 @@ function Fabricator(model = {}) {
 
   fabricate.extend = (opts = {}) => Fabricator({ ...model, ...opts })
 
-  fabricate.times = (count, opts) =>
-    Array(count)
+  fabricate.times = (count, opts) => {
+    let size
+    switch (typeof count) {
+      case 'number':
+        size = count
+        break
+      case 'object':
+        const { min = 1, max = 10 } = count
+        size = Math.floor(Math.random() * (max - min + 1) + min)
+        break
+      default:
+        throw new Error(
+          `times expects a number or an object you passed ${typeof count}`
+        )
+    }
+
+    return Array(size)
       .fill(0)
       .map(() => fabricate(opts))
+  }
 
   return fabricate
 }

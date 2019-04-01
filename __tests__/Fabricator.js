@@ -79,5 +79,28 @@ describe('Fabricator()', () => {
       expect(objs.length).toBe(times)
       objs.forEach(obj => expect(obj).toEqual({ id: 1, admin: true }))
     })
+
+    it.each`
+      min          | max
+      ${undefined} | ${10}
+      ${0}         | ${10}
+      ${3}         | ${undefined}
+      ${5}         | ${7}
+    `(
+      'should create an array of length between min: $min and max: $max',
+      ({ min = 1, max = 10 }) => {
+        const user = Fabricator({})
+        const objs = user.times({ min, max })
+        expect(objs.length).toBeGreaterThanOrEqual(min)
+        expect(objs.length).toBeLessThanOrEqual(max)
+      }
+    )
   })
+
+  it.each(['1', true, false, undefined, null, () => {}])(
+    'should throw if the count is not a number or an object (test with %p)',
+    count => {
+      expect(() => Fabricator({}).times(count)).toThrow()
+    }
+  )
 })

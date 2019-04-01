@@ -99,6 +99,15 @@ const colleagues = userFabricator.times(2, { companyId: 5 })
 // => [{ id: 5, companyId: 5 }, { id: 6, companyId: 6 }]
 ```
 
+If you need a random number of items you can pass an object with the properties
+`min` and `max`:
+
+```js
+userFabricator.times({ max: 5 }) // => a random length from 1 to 5
+userFabricator.times({ min: 0, max: 5 }) // => a random length from 0 to 5
+userFabricator.times({ min: 0 }) // => a random length from 0 to 10
+```
+
 ### sequence()
 
 Sometimes it can be useful to have an increasing value for a field, for example
