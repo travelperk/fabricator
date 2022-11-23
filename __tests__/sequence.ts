@@ -1,4 +1,4 @@
-import { Fabricator, sequence } from '../src/fabricator'
+import { sequence } from '../src/fabricator'
 
 describe('sequence()', () => {
   it('should return an increasing number every time it gets called', () => {
@@ -10,7 +10,7 @@ describe('sequence()', () => {
   it('should increase the sequences separately', () => {
     const names = ['foo', 'bar', 'baz']
     for (let i = 1; i <= 20; i++) {
-      names.forEach(name => expect(sequence(name)).toBe(i))
+      names.forEach((name) => expect(sequence(name)).toBe(i))
     }
   })
 })
@@ -21,23 +21,23 @@ describe('sequence.reset()', () => {
   it('should reset all sequences when called with no arguments', () => {
     const names = ['foo', 'bar', 'baz']
     for (let i = 1; i <= 20; i++) {
-      names.forEach(name => sequence(name))
+      names.forEach((name) => sequence(name))
     }
     sequence.reset()
     for (let i = 1; i <= 20; i++) {
-      names.forEach(name => expect(sequence(name)).toBe(i))
+      names.forEach((name) => expect(sequence(name)).toBe(i))
     }
   })
 
   it('should reset the sequence selected by name', () => {
     const names = ['foo', 'bar', 'baz']
     for (let i = 1; i <= 20; i++) {
-      names.forEach(name => sequence(name))
+      names.forEach((name) => sequence(name))
       sequence('extra')
     }
     sequence.reset('extra')
     for (let i = 1; i <= 20; i++) {
-      names.forEach(name => expect(sequence(name)).toBe(i + 20))
+      names.forEach((name) => expect(sequence(name)).toBe(i + 20))
       expect(sequence('extra')).toBe(i)
     }
   })

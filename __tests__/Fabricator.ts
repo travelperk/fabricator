@@ -69,7 +69,7 @@ describe('Fabricator()', () => {
       const times = 3
       const objs = user.times(times)
       expect(objs.length).toBe(times)
-      objs.forEach(obj => expect(obj).toEqual({ id: 1 }))
+      objs.forEach((obj) => expect(obj).toEqual({ id: 1 }))
     })
 
     it('should create an array based on the model and variations', () => {
@@ -77,7 +77,7 @@ describe('Fabricator()', () => {
       const times = 3
       const objs = user.times(3, { admin: () => true })
       expect(objs.length).toBe(times)
-      objs.forEach(obj => expect(obj).toEqual({ id: 1, admin: true }))
+      objs.forEach((obj) => expect(obj).toEqual({ id: 1, admin: true }))
     })
 
     it.each`
@@ -99,8 +99,8 @@ describe('Fabricator()', () => {
 
   it.each(['1', true, false, undefined, null, () => {}])(
     'should throw if the count is not a number or an object (test with %p)',
-    count => {
-      expect(() => Fabricator({}).times(count)).toThrow()
+    (count) => {
+      expect(() => Fabricator({}).times(count as any)).toThrow()
     }
   )
 })

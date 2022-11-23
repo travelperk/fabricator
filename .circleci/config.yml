@@ -1,0 +1,122 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.3
+
+defaults: &defaults
+  resource_class: small
+  docker:
+    - image: "cimg/node:14.15.4"
+
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - node/install-packages
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'node_modules'
+
+  check:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Typecheck
+          command: npm run typecheck
+      - run:
+          name: EsLint
+          command: npm run lint
+
+  test_jest:
+    <<: *defaults
+    resource_class: medium
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Test Jest
+          command: npm run test:ci
+      - store_artifacts:
+          path: ./coverage
+      - store_test_results:
+          path: ./
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'coverage'
+            - 'junit.xml'
+
+  # test_sonar_scanner:
+  #   resource_class: small
+  #   docker:
+  #     - image: sonarsource/sonar-scanner-cli
+  #   environment:
+  #     - SONAR_SCANNER_OPTS=-Xmx2048m
+  #   steps:
+  #     - restore_cache:
+  #         keys: sonarcloud-v1
+  #     - checkout
+  #     - attach_workspace:
+  #         at: .
+  #     - run: scripts/run_sonar.sh
+  #     # TODO store test results correctly in CircleCI (currently not being recognised)
+  #     - store_artifacts:
+  #         path: test-results
+  #     - save_cache:
+  #         key: sonarcloud-v1
+  #         paths:
+  #           - /opt/sonar-scanner/.sonar/cache
+
+
+  publish_package:
+    <<: *defaults
+    steps:
+      - checkout
+      # Workspace includes the build types already
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build Package with Babel
+          command: npm run build
+      - run:
+          name: Extract types
+          command: npm run extract-types
+      - run:
+          name: Store NPM registry credentials
+          command: |
+            echo email=engineering@travelperk.com >> ./.npmrc
+            echo always-auth=true >> ./.npmrc
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ./.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+
+only_on_build: &only_on_build
+  requires:
+    - check
+    - test_jest
+  filters:
+    branches:
+      only:
+        - master
+
+workflows:
+  main:
+    jobs:
+      - install
+      - check:
+          requires:
+            - install
+      - test_jest:
+          requires:
+            - install
+      - publish_package:
+          # Access to push to npmjs
+          context: [ npmjs ]
+          <<: *only_on_build

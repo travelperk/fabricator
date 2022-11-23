@@ -2,17 +2,12 @@
 <h1>Fabricator</h1>
 
 <a href="https://www.emojione.com/emoji/1f527">
-<img height="80" width="80" alt="wrench" src="https://raw.githubusercontent.com/travelperk/fabricator/master/other/wrench.png" />
+<img height="80" width="80" alt="wrench" src="https://raw.githubusercontent.com/travelperk/fabricator/master/images/wrench.png" />
 </a>
 
 <p>Fabricate objects for your tests</p>
 </div>
 <hr />
-
-[![Build Status](https://travis-ci.org/travelperk/fabricator.svg?branch=master)](https://travis-ci.org/travelperk/fabricator)
-[![Maintainability](https://api.codeclimate.com/v1/badges/3b4b6cb754d1b30ec6e7/maintainability)](https://codeclimate.com/github/travelperk/fabricator/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/3b4b6cb754d1b30ec6e7/test_coverage)](https://codeclimate.com/github/travelperk/fabricator/test_coverage)
-[![Greenkeeper badge](https://badges.greenkeeper.io/travelperk/fabricator.svg)](https://greenkeeper.io/)
 
 ## The Problem
 
