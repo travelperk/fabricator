@@ -37,8 +37,8 @@ const userFabricator = Fabricator({
 ```
 
 You simply pass a model definition. The definition is an object where each key
-is a function. If you need dynamic data you can use `sequence()` or use a
-library like [faker](https://www.npmjs.com/package/faker).
+is a function or a static value. If you need dynamic data you can use
+`sequence()` or use a library like [faker](https://www.npmjs.com/package/faker).
 
 You can also extend existing models. For example:
 
