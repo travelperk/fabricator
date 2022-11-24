@@ -1,0 +1,96 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.3
+
+defaults: &defaults
+  resource_class: small
+  docker:
+    - image: 'cimg/node:14.15.4'
+
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - node/install-packages
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'node_modules'
+
+  check:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Typecheck
+          command: npm run typecheck
+      - run:
+          name: ESLint
+          command: npm run lint
+
+  test_jest:
+    <<: *defaults
+    resource_class: medium
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Test Jest
+          command: npm run test:ci
+      - store_artifacts:
+          path: ./coverage
+      - store_test_results:
+          path: ./
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'coverage'
+            - 'junit.xml'
+
+  publish_package:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build Package with Babel
+          command: npm run build
+      - run:
+          name: Extract types
+          command: npm run extract-types
+      - run:
+          name: Store NPM registry credentials
+          command: |
+            echo email=core-web@travelperk.com >> ./.npmrc
+            echo always-auth=true >> ./.npmrc
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ./.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+
+workflows:
+  main:
+    jobs:
+      - install
+      - check:
+          requires:
+            - install
+      - test_jest:
+          requires:
+            - install
+      - publish_package:
+          # Access to push to npmjs
+          context: [npmjs]
+          requires:
+            - check
+            - test_jest
+          filters:
+            branches:
+              only:
+                - master
