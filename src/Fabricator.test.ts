@@ -1,4 +1,4 @@
-import { Fabricator } from '../src/fabricator'
+import { Fabricator } from './fabricator'
 
 describe('Fabricator()', () => {
   it('should create an empty model', () => {
@@ -17,7 +17,7 @@ describe('Fabricator()', () => {
 
   it('should return an object based on a function', () => {
     const functionValue = Fabricator(() => 5 + 3)
-    expect(functionValue()).toEqual(8)
+    expect(functionValue()).toBe(8)
   })
 
   it('should return an object based on the model and on the variations', () => {
@@ -68,16 +68,16 @@ describe('Fabricator()', () => {
       const user = Fabricator({ id: () => 1 })
       const times = 3
       const objs = user.times(times)
-      expect(objs.length).toBe(times)
-      objs.forEach(obj => expect(obj).toEqual({ id: 1 }))
+      expect(objs).toHaveLength(times)
+      objs.forEach((obj) => expect(obj).toEqual({ id: 1 }))
     })
 
     it('should create an array based on the model and variations', () => {
       const user = Fabricator({ id: () => 1, admin: () => false })
       const times = 3
       const objs = user.times(3, { admin: () => true })
-      expect(objs.length).toBe(times)
-      objs.forEach(obj => expect(obj).toEqual({ id: 1, admin: true }))
+      expect(objs).toHaveLength(times)
+      objs.forEach((obj) => expect(obj).toEqual({ id: 1, admin: true }))
     })
 
     it.each`
@@ -99,8 +99,8 @@ describe('Fabricator()', () => {
 
   it.each(['1', true, false, undefined, null, () => {}])(
     'should throw if the count is not a number or an object (test with %p)',
-    count => {
-      expect(() => Fabricator({}).times(count)).toThrow()
+    (count) => {
+      expect(() => Fabricator({}).times(count as any)).toThrow()
     }
   )
 })

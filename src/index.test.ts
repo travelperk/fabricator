@@ -1,4 +1,4 @@
-import { Fabricator, sequence } from '../src/'
+import { Fabricator, sequence } from '../src'
 
 describe('fabricator', () => {
   it('should export Fabricator()', () => {
