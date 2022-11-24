@@ -1,0 +1,116 @@
+{
+  "extends": ["plugin:jest/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "settings": {
+    "jest": {
+      "version": "29.3.1"
+    }
+  },
+  "rules": {
+    "array-callback-return": "error",
+    "complexity": "error",
+    "curly": ["error", "all"],
+    "default-case": "error",
+    "eqeqeq": ["error", "always", { "null": "ignore" }],
+    "import/no-anonymous-default-export": "off",
+    "max-classes-per-file": "error",
+    "max-lines": [
+      "error",
+      {
+        "max": 500
+      }
+    ],
+    "no-caller": "error",
+    "no-console": "warn",
+    "no-debugger": "warn",
+    "no-dupe-keys": "error",
+    "no-duplicate-case": "error",
+    "no-duplicate-imports": "error",
+    "no-else-return": "error",
+    "no-empty-pattern": "error",
+    "no-eval": "error",
+    "no-extend-native": "error",
+    "no-extra-bind": "error",
+    "no-implicit-coercion": [
+      "error",
+      {
+        "allow": ["!!"]
+      }
+    ],
+    "no-implied-eval": "error",
+    "no-labels": "error",
+    "no-lone-blocks": "error",
+    "no-loop-func": "error",
+    "no-native-reassign": "error",
+    "no-param-reassign": "error",
+    "no-proto": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "name": "styled-components/macro",
+        "message": "Please import from 'styled-components'` instead. Babel macros are not used in Suitcase."
+      }
+    ],
+    "no-return-assign": "error",
+    "no-return-await": "error",
+    "no-script-url": "error",
+    "no-self-assign": "error",
+    "no-self-compare": "error",
+    "no-sequences": "error",
+    "no-throw-literal": "error",
+    "no-unexpected-multiline": "off",
+    "no-unreachable": "error",
+    "no-unused-expressions": "error",
+    "no-use-before-define": "off",
+    "no-useless-call": "error",
+    "no-useless-concat": "error",
+    "no-useless-escape": "error",
+    "no-useless-return": "error",
+    "no-var": "error",
+    "no-void": "error",
+    "no-with": "error",
+    "object-shorthand": "error",
+    "prefer-const": "error",
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "radix": "error",
+    "yoda": [
+      "error",
+      "never",
+      {
+        "exceptRange": true
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": ["warn", { "args": "none" }]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.*"],
+      "rules": {
+        "jest/consistent-test-it": "error",
+        "jest/expect-expect": "error",
+        "jest/no-commented-out-tests": "error",
+        "jest/no-disabled-tests": "error",
+        "jest/no-export": "off",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/no-jasmine-globals": "error",
+        "jest/no-standalone-expect": "error",
+        "jest/prefer-called-with": "error",
+        "jest/prefer-to-be": "error",
+        "jest/prefer-to-have-length": "error",
+        "jest/no-test-return-statement": "error",
+        "jest/valid-describe-callback": "error",
+        "jest/valid-expect-in-promise": "error",
+        "jest/valid-expect": "error",
+        "jest/valid-title": "error"
+      }
+    }
+  ]
+}
