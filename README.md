@@ -2,14 +2,14 @@
 <h1>Fabricator</h1>
 
 <a href="https://www.emojione.com/emoji/1f527">
-<img height="80" width="80" alt="wrench" src="https://raw.githubusercontent.com/travelperk/fabricator/master/images/wrench.png" />
+<img height="80" width="80" alt="wrench" src="https://raw.githubusercontent.com/travelperk/fabricator/main/images/wrench.png" />
 </a>
 
 <p>Fabricate objects for your tests</p>
 </div>
 <hr />
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/travelperk/fabricator/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/travelperk/fabricator/tree/master)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/travelperk/fabricator/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/travelperk/fabricator/tree/main)
 
 ## The Problem
 
