@@ -52,28 +52,6 @@ jobs:
             - 'coverage'
             - 'junit.xml'
 
-  publish_package:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: Build Package with Babel
-          command: npm run build
-      - run:
-          name: Extract types
-          command: npm run extract-types
-      - run:
-          name: Store NPM registry credentials
-          command: |
-            echo email=core-web@travelperk.com >> ./.npmrc
-            echo always-auth=true >> ./.npmrc
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ./.npmrc
-      - run:
-          name: Publish package
-          command: npm publish
-
 workflows:
   main:
     jobs:
@@ -84,13 +62,3 @@ workflows:
       - test_jest:
           requires:
             - install
-      - publish_package:
-          # Access to push to npmjs
-          context: [npmjs]
-          requires:
-            - check
-            - test_jest
-          filters:
-            branches:
-              only:
-                - main
